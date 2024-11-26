@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Главная страница</title>
+  <link rel="stylesheet" th:href="@{/css/style.css}" />
+</head>
+<body>
+    <form action="/Profile" method="get">
+        <button type="submit" formmethod="get">Профиль</button>
+    </form >
+    <form action="/hotelsUser" method="get">
+        <button type="submit" formmethod="get">Отели</button>
+    </form >
+    <form action="/Exit" method="get">
+        <button type="submit" formmethod="get">Выйти</button>
+    </form>
+</body>
+</html>

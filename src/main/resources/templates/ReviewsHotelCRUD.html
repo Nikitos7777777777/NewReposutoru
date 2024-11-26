@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <link rel="stylesheet" th:href="@{/css/style.css}" />
+</head>
+<body>
+<h2> Отзовы отеля </h2> <br>
+<th:block th:each=" reviewsHotel : ${reviewsHotelList}">
+  <form action="/reviewsHotel/update" method="post" style="display:inline;">
+    <input type="hidden" name="idReviewsHotel" th:value="${reviewsHotel.idReviewsHotel}">
+    <input type="text" name="reviews" th:value="${reviewsHotel.reviews}">
+    <button type="submit" formmethod="post">Обновить</button>
+  </form>
+  <form action="/reviewsHotel/delete" method="post" style="display:inline;">
+    <input type="hidden" name="id" th:value="${reviewsHotel.idReviewsHotel}">
+    <button type="submit" formmethod="post">Удалить</button>
+  </form><br>
+</th:block>
+<h2>Добавить</h2> <br>
+<form action="/reviewsHotel/add" method="post" style="display:inline;">
+  <input type="text" name="reviews" placeholder="Отзыв отеля" >
+  <button type="submit" formmethod="post">Добавить</button>
+</form>
+<form action="/AdminPanel" method="get">
+  <button type="submit" formmethod="get">Назад</button>
+</form>
+</body>
+</html>

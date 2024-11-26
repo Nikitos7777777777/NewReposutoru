@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}" />
+</head>
+<body>
+<h2>Существующие пользователи</h2> <br>
+<th:block th:each=" user : ${table}" >
+    <div>
+        <hr>
+    </div>
+    <div class="card-background">
+        <div class="card-item">
+            <div>
+                <hr class="hr-style">
+            </div>
+            <span th:text="${user.username}"></span>
+            <form action="/user/update" method="post" style="display:inline;">
+                <input type="hidden" name="idUser" th:value="${user.idUser}">
+                <input type="text" name="username" th:value="${user.username}" placeholder="Никнейм" required>
+                <input type="text" name="password" th:value="${user.password}" placeholder="Пароль" required>
+                <input type="checkbox" name="active" th:value="${user.active}" placeholder="Активность">
+                <th:block th:each="bookingsUser : ${user.bookings}">
+                    <input type="number" name="bookings" th:value="${bookingsUser.idBooking}">
+                </th:block>
+                <button type="submit" formmethod="post">Обновить</button>
+            </form>
+            <form action="/user/delete" method="post" style="display:inline;">
+                <input type="hidden" name="id" th:value="${user.idUser}">
+                <button type="submit" formmethod="post">Удалить</button>
+            </form><br>
+            <h4>Бронирования</h4>
+            <ul>
+                <th:block th:if="${#lists.isEmpty(user.bookings)}">
+                    <li>Нет бронирований</li>
+                </th:block>
+                <th:block th:each="booking : ${user.bookings}">
+                    <th:block th:each="bookingHotelList : ${booking.hotel}">
+                        Название:
+                        <li th:text="${bookingHotelList.name}"></li>                       
+                        Описани:
+                        <li th:text="${bookingHotelList.capacity}"></li>                        
+                        Стоимость:
+                        <li th:text="${bookingHotelList.cost}" ></li>                        
+                    </th:block>
+                    Начало брони:
+                    <li th:text="${booking.startDay}"></li>
+                    Конец брони:
+                    <li th:text="${booking.endDay}"></li>
+                </th:block>
+            </ul>
+        </div>
+    </div>
+</th:block>
+<h2>Добавить</h2> <br>
+<form action="/user/add" method="post" style="display:inline;">
+    <input type="text" name="username" placeholder="Никнейм" required>
+    <input type="text" name="password"  placeholder="Пароль" required>
+    <input type="checkbox" name="active"  placeholder="Активность">
+    <!-- <input type="number" name="role"  placeholder="роль" required> -->
+    <button type="submit" formmethod="post">Добавить</button>
+</form>
+<form action="/AdminPanel" method="get">
+    <button type="submit" formmethod="get">Назад</button>
+</form>
+</body>
+</html>

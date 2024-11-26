@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Админ-панель отелей</title>
+  <link rel="stylesheet" th:href="@{/css/style.css}" />
+</head>
+<body>
+<h2>Отели</h2> <br>
+<th:block th:each=" hotel : ${hotelList}">
+  <span th:text="${hotel.name}"></span>
+  <form action="/hotel/update" method="post" style="display:inline;">
+    <input type="hidden" name="idHotel" th:value="${hotel.idHotel}">
+    <input type="text" name="img" th:value="${hotel.img}" placeholder="Фото" required>
+    <input type="text" name="name" th:value="${hotel.name}" placeholder="Название" required>
+    <input type="text" name="capacity" th:value="${hotel.capacity}" placeholder="Описание">
+    <input type="number" name="cost" th:value="${hotel.cost}" placeholder="Средняя стоимость комнат">
+    <th:block th:each="hotelRating : ${hotel.ratingHotels}">
+      <input type="number" name="ratingHotels" th:value="${hotelRating.idRatingHotel}">
+    </th:block>
+    <th:block th:each="roomsList : ${hotel.rooms}">
+      <input type="number" name="rooms" th:value="${roomsList.idRoom}">
+    </th:block>
+    <th:block th:each="hotelReviews : ${hotel.reviewsHotels}">
+      <input type="number" name="reviewsHotels" th:value="${hotelReviews.idReviewsHotel}">
+    </th:block>
+    <button class="chel" type="submit" formmethod="post">Обновить</button>
+  </form>
+  <p></p>
+  <label> Комнаты отеля </label>
+  <ul>
+    <th:block th:each="room : ${hotel.rooms}">
+      <li th:text="${room.name}"></li>
+      <li th:text="${room.capacity}"></li>
+      <li th:text="${room.cost}"></li>
+    </th:block>
+  </ul>
+  <label> Оценки отеля </label>
+  <ul>
+    <th:block th:each="rating : ${hotel.ratingHotels}">
+      <li th:text="${rating.rating}"></li>
+    </th:block>
+  </ul>
+  <label> Отзовы отеля </label>
+  <ul>
+    <th:block th:each="review : ${hotel.reviewsHotels}">
+      <li th:text="${review.reviews}"></li>
+    </th:block>
+  </ul>
+  <form action="/hotel/delete" method="post" style="display:inline;">
+    <input type="hidden" name="id" th:value="${hotel.idHotel}">
+    <button type="submit" formmethod="post">Удалить</button>
+  </form><br>
+</th:block>
+<h2>Добавить</h2> <br>
+<form action="/hotel/add" method="post" style="display:inline;" th:object="${hotelNew}">
+  <input type="text" name="img" placeholder="Фото" required>
+  <input type="text" name="name" placeholder="Название" required>
+  <input type="text" name="capacity" placeholder="Описание">
+  <input type="number" name="cost" placeholder="Средняя стоимость комнат">
+  <div>
+    <label for="rooms"></label>
+    <select id="rooms" th:field="*{rooms}">
+      <option th:each="room : ${roomList}" th:value="${room.idRoom}" th:text="${room.name}"></option>
+    </select>
+  </div>
+  <div>
+    <label for="ratingHotels"></label>
+    <select id="ratingHotels" th:field="*{ratingHotels}">
+      <option th:each="rating : ${ratingList}" th:value="${rating.idRatingHotel}" th:text="${rating.rating}"></option>
+    </select>
+  </div>
+  <div>
+    <label for="reviewsHotels"></label>
+    <select id="reviewsHotels" th:field="*{reviewsHotels}">
+      <option th:each="reviews : ${reviewsHotelList}" th:value="${reviews.idReviewsHotel}" th:text="${reviews.reviews}"></option>
+    </select>
+  </div>
+  <button type="submit" formmethod="post">Добавить</button>
+</form>
+<form action="/AdminPanel" method="get">
+  <button type="submit" formmethod="get">Назад</button>
+</form>
+</body>
+</html>

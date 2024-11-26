@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <link rel="stylesheet" th:href="@{/css/style.css}" />
+</head>
+<body>
+<h2> Заказы </h2> <br>
+<th:block th:each=" booking : ${bookingList}">
+  <form action="/booking/update" method="post" style="display:inline;">
+    <input type="hidden" name="idBooking" th:value="${booking.idBooking}">
+    <input type="text" name="startDay" th:value="${booking.startDay}">
+    <input type="text" name="endDay" th:value="${booking.endDay}" required>
+    <th:block th:each="hotelbooking : ${booking.hotel}">
+      <input type="number" name="hotel" th:value="${hotelbooking.idHotel}">
+    </th:block>
+    <input type="number" name="room" th:value="${booking.room.idRoom}">
+    <button type="submit" formmethod="post">Обновить</button>
+  </form>
+  <form action="/booking/delete" method="post" style="display:inline;">
+    <input type="hidden" name="id" th:value="${booking.idBooking}">
+    <button type="submit" formmethod="post">Удалить</button>
+  </form><br>
+  <label> Отель </label>
+  <ul>
+    <th:block th:each="hotelBooking : ${booking.hotel}">
+      <li th:text="${hotelBooking.name}"></li>
+      <li th:text="${hotelBooking.capacity}"></li>
+      <li th:text="${hotelBooking.cost}"></li>
+    </th:block>
+  </ul>
+  <label> Комната </label>
+  <ul>
+    <li th:text="${booking.room.name}"></li>
+    <li th:text="${booking.room.cost}"></li>
+    <li th:text="${booking.room.capacity}"></li>
+  </ul>
+
+</th:block>
+<h2>Добавить</h2> <br>
+<form action="/booking/add" method="post" style="display:inline;">
+  <input type="text" name="startDay" placeholder="Начало">
+  <input type="text" name="endDay"placeholder="Конец" >
+  <div>
+    <label for="hotel"></label>
+    <select id="hotel" th:field="*{bookingNew.hotel}">
+      <option th:each="hotel : ${hotelList}" th:value="${hotel.idHotel}" th:text="${hotel.name}"></option>
+    </select>
+  </div>
+  <div>
+    <label for="room"></label>
+    <select id="room" th:field="*{bookingNew.room}">
+      <option th:each="room : ${roomList}" th:value="${room.idRoom}" th:text="${room.name}"></option>
+    </select>
+  </div>
+  <div>
+    <label for="user"></label>
+    <select id="user" th:field="*{bookingNew.user}">
+      <option th:each="user : ${userList}" th:value="${user.idUser}" th:text="${user.username}"></option>
+    </select>
+  </div>
+  <button type="submit" formmethod="post">Добавить</button>
+</form>
+<form action="/AdminPanel" method="get">
+  <button type="submit" formmethod="get">Назад</button>
+</form>
+</body>
+</html>

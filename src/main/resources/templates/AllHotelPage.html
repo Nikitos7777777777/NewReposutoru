@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Страница отелей</title>
+  <link rel="stylesheet" th:href="@{/css/style.css}" />
+</head>
+<body>
+   <h1>Отели</h1>
+   <th:block th:each=" hotel : ${hotelList}">
+    <span th:text="${hotel.name}"></span>
+    <form style="display:inline;">
+      <label>Фото</label>
+      <input type="text" name="img" th:value="${hotel.img}" placeholder="Фото" disabled>
+      <label>Название</label>
+      <input type="text" name="name" th:value="${hotel.name}" placeholder="Название" disabled>
+      <label>Описание</label>
+      <input type="text" name="capacity" th:value="${hotel.capacity}" placeholder="Описание" disabled>
+      <label>Средняя стоимость комнат</label>
+      <input type="number" name="cost" th:value="${hotel.cost}" placeholder="Средняя стоимость комнат" disabled>
+
+      <label>Оценка отеля</label>
+      <th:block th:if="${#lists.isEmpty(hotel.ratingHotels)}">
+        <li>Нет оценок</li>
+      </th:block>
+      <th:block th:each="hotelRating : ${hotel.ratingHotels}">
+        <input type="number" name="ratingHotels" th:value="${hotelRating.rating}" disabled>
+      </th:block>
+
+      <label>Отзыв отеля</label>
+      <th:block th:if="${#lists.isEmpty(hotel.reviewsHotels)}">
+        <li>Нет отзывов</li>
+      </th:block>
+      <th:block th:each="hotelReviews : ${hotel.reviewsHotels}">
+        <input type="text" name="reviewsHotels" th:value="${hotelReviews.reviews}" disabled>
+      </th:block>
+    </form>
+    <p></p>
+    <label> Комнаты отеля </label>
+    <ul>
+      <th:block th:each="room : ${hotel.rooms}">
+        <li th:text="${room.name}"></li>
+        <li th:text="${room.capacity}"></li>
+        <li th:text="${room.cost}"></li>
+
+        <label> Оценки комнаты </label>
+        <th:block th:if="${#lists.isEmpty(room.ratingRooms)}">
+            <li>Нет оценок</li>
+        </th:block>
+        <th:block th:each="ratingRoom : ${room.ratingRooms}">
+            <li th:text="${ratingRoom.rating}"></li>
+        </th:block>
+        
+        <label> Отзовы комнаты </label>
+        <th:block th:if="${#lists.isEmpty(room.reviewsRooms)}">
+            <li>Нет отзывов</li>
+        </th:block>
+        <th:block th:each="reviewsRoom : ${room.reviewsRooms}">
+            <li th:text="${reviewsRoom.review}"></li>
+        </th:block>
+
+        <form action="/Order" method="get">
+          <input style="display: none;" type="number" name="idRoom" th:value="${room.idRoom}" >
+          <input style="display: none;" type="number" name="idHotel" th:value="${hotel.idHotel}" >
+          <button type="submit" formmethod="get">Забронировать комнату</button>
+        </form>
+      </th:block>
+
+    </ul>
+  </th:block>
+    <form action="/MainUserPanelPage" method="get">
+      <button type="submit" formmethod="get">Назад</button>
+    </form>
+</body>
+</html>

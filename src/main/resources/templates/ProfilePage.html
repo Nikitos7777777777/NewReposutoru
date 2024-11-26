@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Страница профиля</title>
+  <link rel="stylesheet" th:href="@{/css/style.css}" />
+</head>
+<body>
+  <h1>Добропожаловать:</h1>
+  
+  <h2 th:text="${user.username}"> </h2>
+  
+  <h4>Бронирования</h4>
+  <ul>
+      <th:block th:if="${#lists.isEmpty(user.bookings)}">
+          <li>Нет бронирований</li>
+      </th:block>
+      <th:block th:each="booking : ${user.bookings}">
+          <th:block th:each="bookingHotelList : ${booking.hotel}">
+              Название:
+              <li th:text="${bookingHotelList.name}"></li>                       
+              Описани:
+              <li th:text="${bookingHotelList.capacity}"></li>                        
+              Стоимость:
+              <li th:text="${bookingHotelList.cost}" ></li>                        
+          </th:block>
+          Начало брони:
+          <li th:text="${booking.startDay}"></li>
+          Конец брони:
+          <li th:text="${booking.endDay}"></li>
+      </th:block>
+  </ul>
+  <form action="/MainUserPanelPage" method="get">
+    <button type="submit" formmethod="get">Назад</button>
+  </form>
+</body>
+</html>

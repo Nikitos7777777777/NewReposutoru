@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <link rel="stylesheet" th:href="@{/css/style.css}" />
+</head>
+<body>
+<h2> Комнаты </h2> <br>
+<th:block th:each=" room : ${roomList}">
+  <hr color="black" width="70%">
+  <form action="/room/update" method="post" style="display:inline;">
+    <input type="hidden" name="idRoom" th:value="${room.idRoom}">
+    <input type="text" name="img" th:value="${room.img}">
+    <input type="text" name="name" th:value="${room.name}" required>
+    <input type="text" name="capacity" th:value="${room.capacity}"  required>
+    <input type="number" name="cost" th:value="${room.cost}" >
+    <th:block th:each="roomRating : ${room.ratingRooms}">
+      <input type="number" name="ratingRooms" th:value="${roomRating.idRatingRoom}" >
+    </th:block>
+    <th:block th:each="roomReviews : ${room.reviewsRooms}">
+      <input type="number" name="reviewsRooms" th:value="${roomReviews.idReviewsRoom}" >
+    </th:block>
+    <button type="submit" formmethod="post">Обновить</button>
+  </form>
+  <form action="/room/delete" method="post" style="display:inline;">
+    <input type="hidden" name="id" th:value="${room.idRoom}">
+    <button type="submit" formmethod="post">Удалить</button>
+  </form><br>
+  <label> Комнаты оценки </label>
+  <ul>
+    <th:block th:if="${#lists.isEmpty(room.ratingRooms)}">
+      <li>Нет оценок</li>
+    </th:block>
+    <th:block th:each="roomRating : ${room.ratingRooms}">
+      <li th:text="${roomRating.rating}"></li>
+    </th:block>
+  </ul>
+  <label> Комнаты описание </label>
+  <ul>
+    <th:block th:if="${#lists.isEmpty(room.reviewsRooms)}">
+      <li>Нет описаний</li>
+    </th:block>
+    <th:block th:each="roomReviews : ${room.reviewsRooms}">
+      <li th:text="${roomReviews.review}"></li>
+    </th:block>
+  </ul>
+</th:block>
+<hr color="black" width="70%">
+<h2>Добавить</h2> <br>
+<form action="/room/add" method="post" style="display:inline;">
+  <input type="text" name="img" placeholder="Фото" >
+  <input type="text" name="name" placeholder="Номер">
+  <input type="text" name="capacity"placeholder="Описание" >
+  <input type="text" name="cost" placeholder="Стоимость">
+  <div>
+    <label for="ratingHotels"></label>
+    <select id="ratingHotels" th:field="*{roomListNew.ratingRooms}">
+      <option th:each="rating : ${ratingRoomList}" th:value="${rating.idRatingRoom}" th:text="${rating.rating}"></option>
+    </select>
+  </div>
+  <div>
+    <label for="reviewsHotels"></label>
+    <select id="reviewsHotels" th:field="*{roomListNew.reviewsRooms}">
+      <option th:each="reviews : ${reviewsRoomList}" th:value="${reviews.idReviewsRoom}" th:text="${reviews.review}"></option>
+    </select>
+  </div>
+  <button type="submit" formmethod="post">Добавить</button>
+</form>
+<form action="/AdminPanel" method="get">
+  <button type="submit" formmethod="get">Назад</button>
+</form>
+</body>
+</html>

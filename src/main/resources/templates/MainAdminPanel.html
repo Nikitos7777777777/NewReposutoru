@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <link rel="stylesheet" th:href="@{/css/style.css}" />
+</head>
+<body>
+  <form action="/users" method="get">
+    <button type="submit" formmethod="get">Пользователи</button>
+  </form >
+  <form action="/hotels" method="get">
+    <button type="submit" formmethod="get">Отели</button>
+  </form >
+  <form action="/rooms" method="get">
+    <button type="submit" formmethod="get">Комнаты</button>
+  </form>
+  <form action="/reviewsHotels" method="get">
+    <button type="submit" formmethod="get">Отзовы отелей</button>
+  </form>
+  <form action="/ratingHotels" method="get">
+    <button type="submit" formmethod="get">Райтинг отеля</button>
+  </form>
+  <form action="/reviewsRooms" method="get">
+    <button type="submit" formmethod="get">Отзовы комнат</button>
+  </form>
+  <form action="/ratingRooms" method="get">
+    <button type="submit" formmethod="get">Рейтинг комнат</button>
+  </form>
+  <form action="/bookings" method="get">
+    <button type="submit" formmethod="get">Заказы</button>
+  </form>
+  <form action="/Exit" method="get">
+    <button type="submit" formmethod="get">Выйти</button>
+</form>
+</body>
+</html>

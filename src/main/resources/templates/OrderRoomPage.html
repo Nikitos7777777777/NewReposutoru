@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Страница заказа</title>
+  <link rel="stylesheet" th:href="@{/css/style.css}" />
+</head>
+<body>
+
+
+<form action="/order/add" method="post">
+    <input type="text" name="startDay" placeholder="Начало">
+    <input type="text" name="endDay"placeholder="Конец" >
+    <input style="display: none;" type="number" name="idRoom" th:value="${room}" >
+    <input style="display: none;" type="number" name="idHotel" th:value="${hotel}" >
+    <input style="display: none;" type="number" name="idUser" th:value="${user}" >
+    <button type="submit" formmethod="post">Забронировать</button>
+</form>
+
+<form action="/MainUserPanelPage" method="get">
+  <button type="submit" formmethod="get">Назад</button>
+</form>
+</body>
+</html>

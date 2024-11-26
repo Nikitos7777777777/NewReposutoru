@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Строница авторизации</title>
+  <link rel="stylesheet" th:href="@{/css/style.css}" />
+</head>
+<body>
+    <form action="/AuthenticationUser" method="post">
+        <label>Логин: <input type="text" name="username"/></label>
+        <label>Пароль: <input type="password" name="password"/></label>
+        <input type="submit" value="Авторизировать">
+    </form>
+    <a href="/RegistrationOpen">Регистрация</a>
+</body>
+</html>
